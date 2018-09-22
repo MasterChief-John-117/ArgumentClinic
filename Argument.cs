@@ -34,10 +34,10 @@ namespace ArgumentClinic
 
         public T ParseArgs(string[] args)
         {
-            /* -2 so we go to one before the end of the arguments
+            /* -1 so we go to one before the end of the arguments
              * The last argument cannot be a flag as there would never be a following value to parse
              */
-            for(int idx = 0; idx < args.Length - 2; idx++)
+            for(int idx = 0; idx < args.Length - 1; idx++)
             {
                 string cleanFlag = Global.CleanFlag(args[idx]);
                 if(shortForm == cleanFlag || longForm == cleanFlag)

@@ -27,7 +27,7 @@ namespace ArgumentClinic
             {
                 throw new System.Exception("Short flag must be one alphanumeric character");
             }
-            this.longForm = longArg;
+            this.longForm = Global.CleanFlag(longArg);
             this.isRequired = required;
             this.defaultValue = defaultVal;
         }

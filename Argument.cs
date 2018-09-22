@@ -22,7 +22,7 @@ namespace ArgumentClinic
 
         public Argument(string shortArg, string longArg, bool required = false, T defaultVal = default(T))
         {
-            this.shortForm = shortArg;
+            this.shortForm = Global.CleanFlag(shortArg);
             if (this.shortForm.Length != 1)
             {
                 throw new System.Exception("Short flag must be one alphanumeric character");

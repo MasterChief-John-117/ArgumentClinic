@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Text;
 
 namespace ArgumentClinic
 {
-    public class Argument<T>
+    public class Argument<T> : IArgument
     {
         private string shortForm;
         private string longForm;
         private bool isRequired;
+        private string description;
+        private T value;
         private T defaultValue;
+        private ArgumentType type = ArgumentType.Argument;
 
-        public Argument(string shortArg, bool required = false, T defaultVal = default(T))
+        public Argument(string shortArg, string description, bool required = false, T defaultVal = default(T))
         {
             this.shortForm = Global.CleanFlag(shortArg);
+            this.description = description;
             if (this.shortForm.Length != 1)
             {
                 throw new System.Exception("Short flag must be one alphanumeric character");
@@ -20,9 +25,10 @@ namespace ArgumentClinic
             this.defaultValue = defaultVal;
         }
 
-        public Argument(string shortArg, string longArg, bool required = false, T defaultVal = default(T))
+        public Argument(string shortArg, string longArg, string description, bool required = false, T defaultVal = default(T))
         {
             this.shortForm = Global.CleanFlag(shortArg);
+            this.description = description;
             if (this.shortForm.Length != 1)
             {
                 throw new System.Exception("Short flag must be one alphanumeric character");
@@ -58,6 +64,17 @@ namespace ArgumentClinic
                 throw new System.Exception($"Argument ({shortForm}|{longForm}) not found");
             }
             else return this.defaultValue;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("-"+shortForm);
+            if (!string.IsNullOrEmpty(longForm))
+                builder.Append(",-" + longForm);
+            builder.Append(" [" + typeof(T).Name + "]\t\t" + description);
+
+            return builder.ToString();
         }
     }
 }
